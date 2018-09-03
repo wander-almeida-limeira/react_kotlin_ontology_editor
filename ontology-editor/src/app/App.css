@@ -1,0 +1,336 @@
+body{
+/*    background-color: #252526;
+    color: #adadad;*/
+    margin: 0px;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    background: rgb(245, 245, 245);
+}
+
+button:focus {
+  outline: none;
+}
+
+.MuiToolbar-root-36.MuiToolbar-regular-38.MuiToolbar-gutters-37 {
+    padding-left: 0;
+}
+
+h3{
+    border-bottom: 1px solid;
+    //font-family: Open Sans,Helvetica,Arial,sans-serif;
+    margin-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    text-align: center;
+    font-size: 19px;
+}
+
+h5{
+    border-bottom: 1px solid;
+    //font-family: Open Sans,Helvetica,Arial,sans-serif;
+    padding-bottom: 24px;
+    padding-left: 10px;
+    text-align: center;
+    font-size: 15px;
+    margin-bottom: 0;
+}
+
+ul {
+    list-style-type: none;
+    padding: 10px;
+}
+
+.main{
+    position: relative;
+}
+
+.svgArea{
+    background-color:#1e1e1e;
+    height: calc(100vh - (64px));
+    position: relative;
+    top: 64px;
+}
+.leftArea{
+    z-index: 3;
+    background-color:#333333;
+    float: left;
+    width: 50px;
+    height: calc(100vh - (64px));
+    position: absolute;
+    left: 0;
+    top: 64px;
+    color: rgba(255,255,255, 0.6);
+}
+
+.leftContentAreaAddElements{
+    z-index: 2;
+    background-color:#252526;
+    width: 300px;
+    height: 100vh;
+    left: -300px;
+    top: 64px;
+    position: absolute;
+}
+
+.textEditor{
+    background-color:#1e1e1e;
+    height: 100%;
+    padding-top: 20px;
+    padding-left: 70px;
+    padding-right: 275px;
+    display: none;
+}
+
+.textEditor textarea{
+    height: 96%;
+    width: 100%;
+    background: #1e1e1e;
+    color: #adadad;
+}
+
+.drawArea{
+    height: 100%;
+    width: 100%;
+}
+
+.rightArea{
+    z-index: 3;
+    background-color:#333333;
+    color: rgba(255,255,255, 0.6);
+    float: right;
+    width: 350px;
+    height: calc(100vh - (64px));
+    position: absolute;
+    top: 64px;
+    right: 0;
+}
+
+summary{
+    background: #383838;
+    padding-left: 5px;
+    padding: .5em;
+    font-size: 14px;
+}
+
+ul, li{
+    //font-family: Open Sans,Helvetica,Arial,sans-serif;
+    font-size: 12px;
+}
+
+details{
+    background: #252526;
+    margin-bottom: 20px;
+    //font-family: Open Sans,Helvetica,Arial,sans-serif;
+}
+
+.leftContentAreaLabel{
+    margin-left: 15px;
+    padding: .5em;
+    //font-family: Open Sans,Helvetica,Arial,sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+#svgContainer{
+    height: 100%;
+    width: 100%;
+}
+
+.strokeTripleRectLiteral{
+    stroke-width:3;
+    stroke:white;
+    /* fill: url(#img3); */
+    /*theme01*/
+    /* fill: #f9da06; */
+    /*theme02*/
+    fill:#e2c170;
+}
+
+.strokeTripleRectObject{
+    stroke-width:3;
+    stroke:white;
+    fill:#8968a9;
+}
+
+circle:hover, rect:hover{
+    fill: red;
+}
+
+.strokeTripleCircle{
+    stroke-width:2;
+    stroke:white;
+    z-index: 2;
+    /* fill: url(#img1); */
+    /* fill: #1aa1e0; */
+    /*theme02*/
+    fill:#72a4bc;
+}
+
+.strokeTripleCircle.fillRed{
+    fill: red;
+}
+
+.strokeTripleCircle2{
+    stroke-width:2;
+    stroke:white;
+    z-index: 2;
+    fill:#adadad;
+}
+
+.strokeTripleCircle text,tspan{
+    pointer-events: none;
+    //font-family: Helvetica,Arial,sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.strokeDasharray{
+    stroke-dasharray:5;
+}
+
+.draggable {
+    cursor: move;
+}
+
+.svgArea path {
+    fill:   #6c9d60;
+    stroke: #6c9d60;
+    stroke-width: 2;
+    z-index: 1;
+}
+
+.button{
+    fill:           	#225EA8;
+    stroke:   			#0C2C84;
+    stroke-miterlimit:	6;
+    stroke-linecap:		round;
+}
+
+.lnr {
+    display: inline-block;
+    fill: currentColor;
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.05em;
+  }
+
+.elementIcons{
+    /*display: flex;*/
+    justify-content: center;
+}
+
+.elementIcons:hover{
+    stroke: white;
+}
+
+.elementIcons polyline{
+    fill:none;
+    stroke:#adadad;
+    stroke-width:2;
+    stroke-miterlimit:10;
+}
+
+.elementIcons circle{
+    fill:#adadad;
+}
+
+.elementIcons path{
+    fill:#adadad;
+}
+
+.svgEditor{
+    float: right;
+    fill: #adadad;
+    padding-left: 5px;
+    position: relative;
+}
+
+.svgEditor:hover{
+    fill: white;
+}
+
+.editorLi{
+    border-bottom:1px solid;
+    padding-top: 5px;
+    padding-bottom: 15px;
+}
+
+.editorImg{
+    padding-right: 10px;
+    float: left;
+    fill: #adadad;
+}
+
+.tooltip {
+    position: relative;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+    bottom: -30px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    padding-left: 5px;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.tooltip .svgEditor:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.popup {
+    width:400px;
+    height:auto;
+    background:#333333;
+    position:absolute;
+    z-index:100;
+    left: 50%;
+    top: 50%;
+}
+.inputURI {
+    background-color: #383838;
+    border-style: none;
+    height: 20px;
+    width: 100%;
+    color: #adadad;
+}
+
+.inputClearSave {
+    padding-top: 10px;
+}
+
+/*d3*/
+
+.nodes circle {
+  stroke: #adadad;
+  stroke-width: 2px;
+}
+
+.labels text {
+  pointer-events: none;
+  font: 10px sans-serif;
+}
+
+.link-label {
+    fill: white;
+}
+
+button.MuiIconButton-root-40 {
+    color: inherit;
+}
