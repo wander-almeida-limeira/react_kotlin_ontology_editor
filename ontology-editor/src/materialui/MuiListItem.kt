@@ -6,7 +6,7 @@ import react.RClass
 import react.RProps
 
 @JsName("default")
-external val MuiListItem: RClass<ListItemProps>
+external val ListItem: RClass<ListItemProps>
 
 external interface ListItemProps : RProps {
     var button: Boolean

@@ -2,7 +2,7 @@ package app
 
 import react.*
 import materialui.MuiThemeProvider
-import ticker.*
+import tabGroup
 
 class App : RComponent<RProps, RState>() {
     override fun RBuilder.render() {

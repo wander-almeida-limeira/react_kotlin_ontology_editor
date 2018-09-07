@@ -6,7 +6,7 @@ import react.RClass
 import react.RProps
 
 @JsName("default")
-external val MuiCollapse: RClass<CollapseProps>
+external val Collapse: RClass<CollapseProps>
 
 external interface CollapseProps : RProps {
     var `in`: Boolean

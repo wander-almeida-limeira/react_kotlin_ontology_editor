@@ -1,4 +1,3 @@
-package d3Container
 
 import react.*
 import materialui.*
@@ -9,7 +8,7 @@ interface LeftSideBarComponentProps : RProps {
 }
 
 interface LeftSideBarComponentState : RState {
-    var open: Boolean
+
 }
 
 class LeftSideBarComponent(props: LeftSideBarComponentProps) : RComponent<LeftSideBarComponentProps, LeftSideBarComponentState>(props) {
@@ -29,70 +28,70 @@ class LeftSideBarComponent(props: LeftSideBarComponentProps) : RComponent<LeftSi
     override fun RBuilder.render() {
         MuiList {
             attrs { component = "nav" }
-            MuiListItem {
+            ListItem {
                 attrs {
                     button = true
                     onClick = {
                         openItem(1)
                     }
                 }
-                MuiListItemIcon {
+                ListItemIcon {
                     MuiArrowBackIcon{}
                 }
             }
-            MuiListItem {
+            ListItem {
                 attrs {
                     button = true
                     onClick = {
                         openItem(1)
                     }
                 }
-                MuiListItemIcon {
+                ListItemIcon {
                     MuiHelpIcon{}
                 }
-                MuiListItemText {
+                ListItemText {
                     attrs { inset = true; primary = "Help" }
                 }
             }
-            MuiListItem {
+            ListItem {
                 attrs {
                     button = true
                     onClick = {
                         openItem(1)
                     }
                 }
-                MuiListItemIcon {
+                ListItemIcon {
                     MuiFeedbackIcon{}
                 }
-                MuiListItemText {
+                ListItemText {
                     attrs { inset = true; primary = "Feedback" }
                 }
             }
-            MuiListItem {
+            ListItem {
                 attrs {
                     button = true
                     onClick = {
                         openItem(1)
                     }
                 }
-                MuiListItemIcon {
+                ListItemIcon {
                     MuiContactSupportIcon{}
                 }
-                MuiListItemText {
+                ListItemText {
                     attrs { inset = true; primary = "Contact" }
                 }
             }
-            MuiListItem {
+            ListItem {
                 attrs {
                     button = true
                     onClick = {
-                        openItem(1)
+                        openItem(6)
                     }
                 }
-                MuiListItemIcon {
+                ListItemIcon {
                     MuiInfoIcon{}
                 }
-                MuiListItemText {
+                ListItemText {
                     attrs { inset = true; primary = "About" }
                 }
             }

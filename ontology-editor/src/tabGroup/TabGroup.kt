@@ -1,14 +1,10 @@
-package ticker
 
-import d3Container.individualsComponent
-import d3Container.leftSideBar
-import graphEditorComponent
 import materialui.*
 import materialui.Icons.MuiMenuIcon
 import org.w3c.dom.events.Event
 import react.*
-import react.dom.*
-import kotlin.browser.*
+import react.dom.div
+import react.dom.img
 
 @JsModule("src/tabGroup/logo-editor.svg")
 external val editorLogo: dynamic
@@ -48,10 +44,10 @@ class TabGroup(props: TabGroupProps) : RComponent<TabGroupProps, TabGroupState>(
     }
 
     override fun RBuilder.render() {
-            MuiAppBar {
+            AppBar {
                 attrs { title = "Placeholder" }
-                MuiToolbar {
-                    MuiIconButton {
+                Toolbar {
+                    IconButton {
                         attrs {
                             onClick = {
                                 openLeftSideBar()
@@ -60,36 +56,36 @@ class TabGroup(props: TabGroupProps) : RComponent<TabGroupProps, TabGroupState>(
                         MuiMenuIcon {}
                     }
                     img(alt = "Ontology editor logo", src = editorLogo, classes = "logo") {}
-                    MuiTabs {
+                    Tabs {
                         attrs {
                             value = state.tab; scrollable = true; scrollButtons = "auto"
                             onChange = { event: Event, eventValue: Int ->
                                 tabChange(eventValue)
                             }
                         }
-                        MuiTab {
+                        Tab {
                             attrs { label = "Graph Editor" }
                         }
-                        MuiTab {
+                        Tab {
                             attrs { label = "Individuals" }
                         }
-                        MuiTab {
+                        Tab {
                             attrs { label = "Text Editor" }
                         }
-                        MuiTab {
+                        Tab {
                             attrs { label = "Class Hierarchy" }
                         }
-                        MuiTab {
+                        Tab {
                             attrs { label = "Object Property Hierarchy" }
                         }
-                        MuiTab {
+                        Tab {
                             attrs { label = "Data Property Hierarchy" }
                         }
-                        MuiTab {
-                            attrs { label = "Settings" }
+                        Tab {
+                            attrs { label = "General Settings" }
                         }
                     }
-                    MuiDrawer{
+                    Drawer{
                         attrs {
                             anchor = "left"
                             open = state.openLeftSideBar

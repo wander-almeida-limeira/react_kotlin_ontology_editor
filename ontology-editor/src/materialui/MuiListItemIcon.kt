@@ -6,7 +6,7 @@ import react.RClass
 import react.RProps
 
 @JsName("default")
-external val MuiListItemIcon: RClass<ListItemIconProps>
+external val ListItemIcon: RClass<ListItemIconProps>
 
 external interface ListItemIconProps : RProps {
     var label: String

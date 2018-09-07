@@ -1,10 +1,8 @@
-package ticker
 
-import materialui.MuiButton
-import materialui.MuiTextField
+import materialui.Button
+import materialui.TextField
 import react.*
 import react.dom.*
-import kotlin.browser.*
 
 interface SettingsProps : RProps {
 
@@ -26,12 +24,12 @@ class Settings(props: TabGroupProps) : RComponent<TabGroupProps, TabGroupState>(
 
         div(classes="row align-items-center") {
             div(classes="col") {
-                MuiTextField() {
+                TextField() {
                     attrs { label = "Placeholder" }
                 }
             }
             div(classes="col") {
-                MuiButton() {
+                Button() {
                     attrs { disabled = false; variant = "outlined" }
                     +"You clicked times"
                 }

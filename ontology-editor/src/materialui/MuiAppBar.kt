@@ -6,7 +6,7 @@ import react.RClass
 import react.RProps
 
 @JsName("default")
-external val MuiAppBar: RClass<AppBarProps>
+external val AppBar: RClass<AppBarProps>
 
 external interface AppBarProps : RProps {
     var position: String

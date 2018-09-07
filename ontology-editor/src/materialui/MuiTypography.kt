@@ -6,9 +6,12 @@ import react.RClass
 import react.RProps
 
 @JsName("default")
-external val MuiTypography: RClass<TypographyProps>
+external val Typography: RClass<TypographyProps>
 
 external interface TypographyProps : RProps {
+    var color: String
+    var variant: String
     var component: String
     var className: String
+    var gutterBottom: Boolean
 }

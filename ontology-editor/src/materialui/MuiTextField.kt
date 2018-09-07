@@ -6,7 +6,7 @@ import react.RClass
 import react.RProps
 
 @JsName("default")
-external val MuiTextField: RClass<TextFieldProps>
+external val TextField: RClass<TextFieldProps>
 
 external interface TextFieldProps : RProps {
     var disabled: Boolean

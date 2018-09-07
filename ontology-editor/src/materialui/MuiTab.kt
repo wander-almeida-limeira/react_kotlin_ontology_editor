@@ -6,7 +6,7 @@ import react.RClass
 import react.RProps
 
 @JsName("default")
-external val MuiTab: RClass<TabProps>
+external val Tab: RClass<TabProps>
 
 external interface TabProps : RProps {
     var label: String

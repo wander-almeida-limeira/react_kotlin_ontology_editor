@@ -1,8 +1,7 @@
-package leftPanelGraph
 
+import materialui.*
 import react.*
 import react.dom.*
-import materialui.MuiIconButton
 import materialui.Icons.*
 
 interface LeftPanelGraphProps : RProps {
@@ -10,42 +9,62 @@ interface LeftPanelGraphProps : RProps {
 }
 
 interface LeftPanelGraphState : RState {
-
+    var openSettings: Boolean
 }
 
 class LeftPanelGraph(props: LeftPanelGraphProps) : RComponent<LeftPanelGraphProps, LeftPanelGraphState>(props) {
 
 
-    override fun LeftPanelGraphState.init(props: LeftPanelGraphProps) {}
+    override fun LeftPanelGraphState.init(props: LeftPanelGraphProps) {
+        openSettings = false
+    }
 
     override fun componentDidMount() {}
 
     override fun componentWillUnmount() {}
 
+    var openCloseSettings: (item: Int) -> Unit = {
+        if (it == 6)
+            setState {
+                openSettings = !openSettings
+            }
+    }
+
     override fun RBuilder.render() {
         section("leftArea") {
-            MuiIconButton {
+            IconButton {
                 MuiSearchIcon {}
             }
-            MuiIconButton {
+            IconButton {
                 MuiUndoIcon {}
             }
-            MuiIconButton {
+            IconButton {
                 MuiRedoIcon {}
             }
-            MuiIconButton {
+            IconButton {
                 MuiZoomInIcon {}
             }
-            MuiIconButton {
+            IconButton {
                 MuiZoomOutIcon {}
             }
-            MuiIconButton {
+            IconButton {
                 attrs {
                     className = "config-button"
+                    onClick = {
+                        openCloseSettings(6)
+                    }
                 }
                 MuiSettingsIcon {}
             }
         }
+        if (state.openSettings)
+        graphEditorSettingsComponent(state.openSettings, object : SettingsInterface {
+            override fun openCloseSettings() {
+                setState {
+                    openSettings = !openSettings
+                }
+            }
+        })
     }
 
 }

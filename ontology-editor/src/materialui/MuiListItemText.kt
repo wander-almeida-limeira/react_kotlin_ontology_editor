@@ -6,7 +6,7 @@ import react.RClass
 import react.RProps
 
 @JsName("default")
-external val MuiListItemText: RClass<ListItemTextProps>
+external val ListItemText: RClass<ListItemTextProps>
 
 external interface ListItemTextProps : RProps {
     var primary: String

@@ -1,6 +1,12 @@
 let d3interface = {};
 
-    d3interface.render = function (json) {
+var classColorCode = "#448afe"
+
+d3interface.setClassColorCode = function (colorCode) {
+    classColorCode = colorCode;
+}
+
+d3interface.render = function (json) {
 
 var svg = d3.select("#d3svg"),
     width = document.getElementById("d3svg").clientWidth,
@@ -156,7 +162,7 @@ var links_data = [
             .attr("r", radius)
             .attr("stroke", "#adadad")
             .attr("stroke-width", "2px")
-            .attr("fill", circleColour);
+            .attr("fill", classColorCode);
 
     } else if (nodeType == "rect") {
         node = svg.append("g")
@@ -207,20 +213,6 @@ var links_data = [
         .on("end", drag_end);
 
     drag_handler(node)
-
-
-
-    /** Functions **/
-
-    //Function to choose what color circle we have
-    //Let's return blue for males and red for females
-    function circleColour(d){
-        if(d.sex =="M"){
-            return "#448afe";
-        } else {
-            return "#448afe";
-        }
-    }
 
     //Function to choose the line colour and thickness
     //If the link type is "A" return green

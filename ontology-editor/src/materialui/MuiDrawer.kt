@@ -6,7 +6,7 @@ import react.RClass
 import react.RProps
 
 @JsName("default")
-external val MuiDrawer: RClass<DrawerProps>
+external val Drawer: RClass<DrawerProps>
 
 external interface DrawerProps : RProps {
     var open: Boolean

@@ -7,7 +7,7 @@ import react.RClass
 import react.RProps
 
 @JsName("default")
-external val MuiTabs: RClass<TabsProps>
+external val Tabs: RClass<TabsProps>
 
 external interface TabsProps : RProps {
     var value: Int

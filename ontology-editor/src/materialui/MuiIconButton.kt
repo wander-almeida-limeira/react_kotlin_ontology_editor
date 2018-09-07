@@ -6,9 +6,10 @@ import react.RClass
 import react.RProps
 
 @JsName("default")
-external val MuiIconButton: RClass<IconButtonProps>
+external val IconButton: RClass<IconButtonProps>
 
 external interface IconButtonProps : RProps {
+    var color: String
     var className: String
     var onClick:()-> Unit
 }

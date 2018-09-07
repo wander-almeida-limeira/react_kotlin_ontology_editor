@@ -6,7 +6,7 @@ import react.RClass
 import react.RProps
 
 @JsName("default")
-external val MuiInput: RClass<InputProps>
+external val Input: RClass<InputProps>
 
 external interface InputProps : RProps {
     var disabled: Boolean

@@ -1,10 +1,12 @@
-package d3Container
 
-import react.*
-import react.dom.*
-import kotlin.browser.*
-import kotlinx.html.*
-import org.w3c.dom.get
+import kotlinx.html.id
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
+import react.dom.div
+import react.dom.section
+import react.dom.svg
 
 interface TickerProps : RProps {
 

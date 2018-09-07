@@ -1,4 +1,3 @@
-package leftPanelGraph
 
 import react.*
 import react.dom.*

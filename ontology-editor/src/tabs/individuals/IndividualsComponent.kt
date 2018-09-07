@@ -1,10 +1,9 @@
-package d3Container
 
-import react.*
 import materialui.*
 import materialui.Icons.MuiExpandLessIcon
 import materialui.Icons.MuiExpandMoreIcon
 import materialui.Icons.MuiSearchIcon
+import react.*
 
 interface IndividualsComponentProps : RProps {
 
@@ -33,7 +32,7 @@ class IndividualsComponent(props: IndividualsComponentProps) : RComponent<Indivi
     override fun RBuilder.render() {
         MuiList {
             attrs { component = "nav" }
-            MuiListItem {
+            ListItem {
                 attrs {
                     button = true;
                     onClick = {
@@ -41,18 +40,18 @@ class IndividualsComponent(props: IndividualsComponentProps) : RComponent<Indivi
                     }
                 }
                 if (state.open) MuiExpandLessIcon{} else MuiExpandMoreIcon{}
-                MuiListItemIcon {
+                ListItemIcon {
                     MuiSearchIcon{}
                 }
-                MuiListItemText {
+                ListItemText {
                     attrs { inset = true; primary = "Sent mail" }
                 }
             }
-            MuiCollapse {
+            Collapse {
                 attrs { `in` = state.open; timeout = "auto"; unmountOnExit = true}
                 MuiList {
                     attrs { component = "nav"; disablePadding = false }
-                    MuiListItem {
+                    ListItem {
                         attrs {
                             button = true;
                             onClick = {
@@ -60,21 +59,21 @@ class IndividualsComponent(props: IndividualsComponentProps) : RComponent<Indivi
                             }
                         }
                         if (state.open) MuiExpandLessIcon {} else MuiExpandMoreIcon {}
-                        MuiListItemIcon {
+                        ListItemIcon {
                             MuiSearchIcon {}
                         }
-                        MuiListItemText {
+                        ListItemText {
                             attrs { inset = true; primary = "Sent mail" }
                         }
                     }
                 }
             }
-            MuiListItem {
+            ListItem {
                 attrs { button = true; }
-                MuiListItemIcon {
+                ListItemIcon {
                     MuiSearchIcon{}
                 }
-                MuiListItemText {
+                ListItemText {
                     attrs { inset = true; primary = "Sent mail" }
                 }
             }

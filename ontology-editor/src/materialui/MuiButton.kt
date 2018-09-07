@@ -6,9 +6,10 @@ import react.RClass
 import react.RProps
 
 @JsName("default")
-external val MuiButton: RClass<ButtonProps>
+external val Button: RClass<ButtonProps>
 
 external interface ButtonProps : RProps {
+    var color: String
     var disabled: Boolean
     var onClick:()-> Unit
     var variant: String

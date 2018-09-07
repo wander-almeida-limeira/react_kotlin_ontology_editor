@@ -1,7 +1,4 @@
 
-import d3Container.d3ContainerComponent
-import leftPanelGraph.leftPanelGraph
-import leftPanelGraph.rightPanelGraph
 import react.RBuilder
 import react.RComponent
 import react.RProps

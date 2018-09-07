@@ -1,0 +1,18 @@
+@file:JsModule("@material-ui/core/Dialog")
+
+package materialui
+
+import react.RClass
+import react.RProps
+import react.ReactElement
+
+@JsName("default")
+external val Dialog: RClass<DialogProps>
+
+external interface DialogProps : RProps {
+    var className: String
+    var fullScreen: Boolean
+    var open: Boolean
+    var onClose:()-> Unit
+    var TransitionComponent: ReactElement
+}
