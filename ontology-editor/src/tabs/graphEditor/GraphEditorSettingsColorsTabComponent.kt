@@ -21,8 +21,12 @@ interface GraphEditorSettingsColorsTabState : RState {
     var selectedClassLabelColorValue: String
     var selectedRelationColorValue: String
     var classShadeValue: Int
+    var classCustomValue: Boolean
+    var relationCustomValue: Boolean
+    var classLabelCustomValue: Boolean
     var classLabelShadeValue: Int
     var relationShadeValue: Int
+    var openColorPalette: Boolean
 }
 class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : RComponent<GraphEditorSettingsColorsTabProps, GraphEditorSettingsColorsTabState>(props) {
 
@@ -35,6 +39,7 @@ class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : R
         classShadeValue = 12
         classLabelShadeValue = 12
         relationShadeValue = 12
+        openColorPalette = false
     }
 
     fun setClassColorCode(code: String) = js("""
@@ -109,6 +114,10 @@ class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : R
         }
     }
 
+    fun deleteCustomColorRule(): String {
+        return ""
+    }
+
     override fun RBuilder.render() {
             div (classes="container-fluid") {
                 div(classes = "row ") {
@@ -120,47 +129,87 @@ class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : R
                                 }
                                 +"Class Color"
                             }
-                            Typography {+"Shade:"}
-                            Slider {
+                            FormControlLabel {
                                 attrs {
-                                    className = "slider-color"
-                                    value = state.classShadeValue
-                                    min = 0
-                                    max = 13
-                                    step = 1
-                                    onChange = { event: Event, eventValue: Int ->
-                                        setState {
-                                            classShadeValue = eventValue
+                                    control = Switch {
+                                        attrs {
+                                            checked = state.classCustomValue
+                                            onChange = { event: Event, eventValue: Boolean ->
+                                                setState {
+                                                    classCustomValue = !classCustomValue
+                                                }
+                                            }
+                                            value = "classCustomColorChecked"
+                                            color = "secondary"
+                                        }
+                                    }
+                                    label = "Custom class color code"
+                                }
+                            }
+                            if (!state.classCustomValue) {
+                                Typography { +"Shade:" }
+                                Slider {
+                                    attrs {
+                                        className = "slider-color"
+                                        value = state.classShadeValue
+                                        min = 0
+                                        max = 13
+                                        step = 1
+                                        onChange = { event: Event, eventValue: Int ->
+                                            setState {
+                                                classShadeValue = eventValue
+                                            }
                                         }
                                     }
                                 }
-                            }
-                            div (classes = "colors-main-div") {
-                                for (i in colorsArray) {
-                                    Radio {
-                                        attrs {
-                                            checked = state.selectedClassColorValue == i.toString()
-                                            value = i.toString()
-                                            color = "default"
-                                            icon = div(classes = "colors-div") { attrs { style = kotlinext.js.js { background = getColorPropertyValue(i, "class") } } }
-                                            checkedIcon = div(classes = "colors-div-checked") { attrs { style = kotlinext.js.js { background = getColorPropertyValue(i, "class") } } ; MuiCheckIcon {} }
-                                            onChange = { event: Event, eventValue: Boolean ->
-                                                val eventTargetValue = (event.target as HTMLInputElement)?.value
-                                                setState {
-                                                    selectedClassColorValue = eventTargetValue
-                                                    val result = setClassColorCode(getColorPropertyValue(selectedClassColorValue, "class").toString())
+                                div(classes = "colors-main-div") {
+                                    for (i in colorsArray) {
+                                        Radio {
+                                            attrs {
+                                                checked = state.selectedClassColorValue == i.toString()
+                                                value = i.toString()
+                                                color = "default"
+                                                icon = div(classes = "colors-div") { attrs { style = kotlinext.js.js { background = getColorPropertyValue(i, "class") } } }
+                                                checkedIcon = div(classes = "colors-div-checked") { attrs { style = kotlinext.js.js { background = getColorPropertyValue(i, "class") } }; MuiCheckIcon {} }
+                                                onChange = { event: Event, eventValue: Boolean ->
+                                                    val eventTargetValue = (event.target as HTMLInputElement)?.value
+                                                    setState {
+                                                        selectedClassColorValue = eventTargetValue
+                                                        val result = setClassColorCode(getColorPropertyValue(selectedClassColorValue, "class").toString())
+                                                    }
                                                 }
                                             }
                                         }
                                     }
                                 }
-                            }
-                            TextField {
-                                attrs {
-                                    className = "mt-2"
-                                    label = "Color code"
-                                    color = "secondary"
-                                    value = getColorPropertyValue(state.selectedClassColorValue, "class").toString()
+                                TextField {
+                                    attrs {
+                                        className = "mt-2 graph-colors-setting-text-field"
+                                        label = "Color code"
+                                        color = "secondary"
+                                        value = getColorPropertyValue(state.selectedClassColorValue, "class").toString()
+                                    }
+                                }
+                            } else {
+                                TextField {
+                                    attrs {
+                                        className = "mt-2 graph-colors-setting-text-field"
+                                        label = "Custom color code"
+                                        color = "secondary"
+                                        value = getColorPropertyValue(state.selectedClassColorValue, "class").toString()
+                                    }
+                                }
+                                Button {
+                                    attrs {
+                                        className = "mt-3"
+                                        color = "secondary"
+                                        onClick = {
+                                            setState {
+                                                openColorPalette = true
+                                            }
+                                        }
+                                    }
+                                    +"See color palette"
                                 }
                             }
                         }
@@ -172,47 +221,87 @@ class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : R
                                 }
                                 +"Relation Color"
                             }
-                            Typography {+"Shade:"}
-                            Slider {
+                            FormControlLabel {
                                 attrs {
-                                    className = "slider-color"
-                                    value = state.relationShadeValue
-                                    min = 0
-                                    max = 13
-                                    step = 1
-                                    onChange = { event: Event, eventValue: Int ->
-                                        setState {
-                                            relationShadeValue = eventValue
+                                    control = Switch {
+                                        attrs {
+                                            checked = state.relationCustomValue
+                                            onChange = { event: Event, eventValue: Boolean ->
+                                                setState {
+                                                    relationCustomValue = !relationCustomValue
+                                                }
+                                            }
+                                            value = "classCustomColorChecked"
+                                            color = "secondary"
+                                        }
+                                    }
+                                    label = "Custom relation color code"
+                                }
+                            }
+                            if (!state.relationCustomValue) {
+                                Typography { +"Shade:" }
+                                Slider {
+                                    attrs {
+                                        className = "slider-color"
+                                        value = state.relationShadeValue
+                                        min = 0
+                                        max = 13
+                                        step = 1
+                                        onChange = { event: Event, eventValue: Int ->
+                                            setState {
+                                                relationShadeValue = eventValue
+                                            }
                                         }
                                     }
                                 }
-                            }
-                            div (classes = "colors-main-div") {
-                                for (i in colorsArray) {
-                                    Radio {
-                                        attrs {
-                                            checked = state.selectedRelationColorValue == i.toString()
-                                            value = i.toString()
-                                            color = "default"
-                                            icon = div(classes = "colors-div") { attrs { style = kotlinext.js.js { background = getColorPropertyValue(i, "relation") } } }
-                                            checkedIcon = div(classes = "colors-div-checked") { attrs { style = kotlinext.js.js { background = getColorPropertyValue(i, "relation") } } ; MuiCheckIcon {} }
-                                            onChange = { event: Event, eventValue: Boolean ->
-                                                val eventTargetValue = (event.target as HTMLInputElement)?.value
-                                                setState {
-                                                    selectedRelationColorValue = eventTargetValue
-                                                    val result = setRelationColorCode(getColorPropertyValue(selectedRelationColorValue, "relation").toString())
+                                div(classes = "colors-main-div") {
+                                    for (i in colorsArray) {
+                                        Radio {
+                                            attrs {
+                                                checked = state.selectedRelationColorValue == i.toString()
+                                                value = i.toString()
+                                                color = "default"
+                                                icon = div(classes = "colors-div") { attrs { style = kotlinext.js.js { background = getColorPropertyValue(i, "relation") } } }
+                                                checkedIcon = div(classes = "colors-div-checked") { attrs { style = kotlinext.js.js { background = getColorPropertyValue(i, "relation") } }; MuiCheckIcon {} }
+                                                onChange = { event: Event, eventValue: Boolean ->
+                                                    val eventTargetValue = (event.target as HTMLInputElement)?.value
+                                                    setState {
+                                                        selectedRelationColorValue = eventTargetValue
+                                                        val result = setRelationColorCode(getColorPropertyValue(selectedRelationColorValue, "relation").toString())
+                                                    }
                                                 }
                                             }
                                         }
                                     }
                                 }
-                            }
-                            TextField {
-                                attrs {
-                                    className = "mt-2"
-                                    label = "Color code"
-                                    color = "secondary"
-                                    value = getColorPropertyValue(state.selectedRelationColorValue, "relation").toString()
+                                TextField {
+                                    attrs {
+                                        className = "mt-2 graph-colors-setting-text-field"
+                                        label = "Color code"
+                                        color = "secondary"
+                                        value = getColorPropertyValue(state.selectedRelationColorValue, "relation").toString()
+                                    }
+                                }
+                            } else {
+                                TextField {
+                                    attrs {
+                                        className = "mt-2 graph-colors-setting-text-field"
+                                        label = "Custom color code"
+                                        color = "secondary"
+                                        value = getColorPropertyValue(state.selectedClassColorValue, "class").toString()
+                                    }
+                                }
+                                Button {
+                                    attrs {
+                                        className = "mt-3"
+                                        color = "secondary"
+                                        onClick = {
+                                            setState {
+                                                openColorPalette = true
+                                            }
+                                        }
+                                    }
+                                    +"See color palette"
                                 }
                             }
                         }
@@ -224,50 +313,126 @@ class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : R
                                 }
                                 +"Class Label Color"
                             }
-                            Typography {+"Shade:"}
-                            Slider {
+                            FormControlLabel {
                                 attrs {
-                                    className = "slider-color"
-                                    value = state.classLabelShadeValue
-                                    min = 0
-                                    max = 13
-                                    step = 1
-                                    onChange = { event: Event, eventValue: Int ->
-                                        setState {
-                                            classLabelShadeValue = eventValue
+                                    control = Switch {
+                                        attrs {
+                                            checked = state.classLabelCustomValue
+                                            onChange = { event: Event, eventValue: Boolean ->
+                                                setState {
+                                                    classLabelCustomValue = !classLabelCustomValue
+                                                }
+                                            }
+                                            value = "classCustomColorChecked"
+                                            color = "secondary"
+                                        }
+                                    }
+                                    label = "Custom class label color code"
+                                }
+                            }
+                            if (!state.classLabelCustomValue) {
+                                Typography { +"Shade:" }
+                                Slider {
+                                    attrs {
+                                        className = "slider-color"
+                                        value = state.classLabelShadeValue
+                                        min = 0
+                                        max = 13
+                                        step = 1
+                                        onChange = { event: Event, eventValue: Int ->
+                                            setState {
+                                                classLabelShadeValue = eventValue
+                                            }
                                         }
                                     }
                                 }
-                            }
-                            div (classes = "colors-main-div") {
-                                for (i in colorsArray) {
-                                    Radio {
-                                        attrs {
-                                            checked = state.selectedClassLabelColorValue == i.toString()
-                                            value = i.toString()
-                                            color = "default"
-                                            icon = div(classes = "colors-div") { attrs { style = kotlinext.js.js { background = getColorPropertyValue(i, "classLabel") } } }
-                                            checkedIcon = div(classes = "colors-div-checked") { attrs { style = kotlinext.js.js { background = getColorPropertyValue(i, "classLabel") } } ; MuiCheckIcon {} }
-                                            onChange = { event: Event, eventValue: Boolean ->
-                                                val eventTargetValue = (event.target as HTMLInputElement)?.value
-                                                setState {
-                                                    selectedClassLabelColorValue = eventTargetValue
-                                                    val result = setClassLabelColorCode(getColorPropertyValue(selectedClassLabelColorValue, "classLabel").toString())
+                                div(classes = "colors-main-div") {
+                                    for (i in colorsArray) {
+                                        Radio {
+                                            attrs {
+                                                checked = state.selectedClassLabelColorValue == i.toString()
+                                                value = i.toString()
+                                                color = "default"
+                                                icon = div(classes = "colors-div") { attrs { style = kotlinext.js.js { background = getColorPropertyValue(i, "classLabel") } } }
+                                                checkedIcon = div(classes = "colors-div-checked") { attrs { style = kotlinext.js.js { background = getColorPropertyValue(i, "classLabel") } }; MuiCheckIcon {} }
+                                                onChange = { event: Event, eventValue: Boolean ->
+                                                    val eventTargetValue = (event.target as HTMLInputElement)?.value
+                                                    setState {
+                                                        selectedClassLabelColorValue = eventTargetValue
+                                                        val result = setClassLabelColorCode(getColorPropertyValue(selectedClassLabelColorValue, "classLabel").toString())
+                                                    }
                                                 }
                                             }
                                         }
                                     }
                                 }
-                            }
-                            TextField {
-                                attrs {
-                                    className = "mt-2"
-                                    label = "Color code"
-                                    color = "secondary"
-                                    value = getColorPropertyValue(state.selectedClassLabelColorValue, "classLabel").toString()
+                                TextField {
+                                    attrs {
+                                        className = "mt-2 graph-colors-setting-text-field"
+                                        label = "Color code"
+                                        color = "secondary"
+                                        value = getColorPropertyValue(state.selectedClassLabelColorValue, "classLabel").toString()
+                                    }
+                                }
+                            } else {
+                                TextField {
+                                    attrs {
+                                        className = "mt-2 graph-colors-setting-text-field"
+                                        label = "Custom color code"
+                                        color = "secondary"
+                                        value = getColorPropertyValue(state.selectedClassColorValue, "class").toString()
+                                    }
+                                }
+                                Button {
+                                    attrs {
+                                        className = "mt-3"
+                                        color = "secondary"
+                                        onClick = {
+                                            setState {
+                                                openColorPalette = true
+                                            }
+                                        }
+                                    }
+                                    +"See color palette"
                                 }
                             }
                         }
+                }
+                if (state.openColorPalette)
+                    graphEditorColorPaletteComponent(state.openColorPalette, object : ColorPaletteInterface {
+                        override fun openCloseColorPalette() {
+                            setState {
+                                openColorPalette = !openColorPalette
+                            }
+                        }
+                    })
+                div(classes = "row") {
+                    div(classes = "col p-4 d-flex align-items-center") {
+                        Typography {
+                            attrs {
+                                className = "m-2"
+                                variant = "title"
+                            }
+                            +"Custom Color Rules:"
+                        }
+                        Chip{
+                            attrs {
+                                label = "Class Name"
+                                onDelete = {
+                                    deleteCustomColorRule()
+                                }
+                            }
+                        }
+                        Button {
+                            attrs {
+                                color = "secondary"
+                                onClick = {
+
+                                }
+                            }
+                            +"Add new color rule"
+                        }
+                    }
                 }
                 div(classes = "row content-graph-editor-settings-div") {
                     div (classes="col align-self-end p-4 save-div") {

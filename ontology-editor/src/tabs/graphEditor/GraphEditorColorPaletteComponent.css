@@ -1,0 +1,27 @@
+
+.dialog-graph-editor-color-palette>div{
+    background: #f5f5f5;
+    max-width: 100%;
+}
+
+.colors-div-palette {
+    width: 300px;
+    height: 48px;
+}
+
+.colors-first-div-palette {
+    width: 300px;
+    height: 125px;
+}
+
+.colors-div-palette-height {
+    height: 100%;
+}
+
+.palette-color-code-end {
+    text-align: end;
+}
+
+.palette-color-code-grid {
+    display: grid;
+}

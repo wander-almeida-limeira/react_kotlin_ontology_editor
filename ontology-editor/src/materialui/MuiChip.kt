@@ -1,0 +1,16 @@
+@file:JsModule("@material-ui/core/Chip")
+
+package materialui
+
+import react.RClass
+import react.RProps
+
+@JsName("default")
+external val Chip: RClass<ChipProps>
+
+external interface ChipProps : RProps {
+    var color: String
+    var onDelete:()-> Unit
+    var className: String
+    var label: String
+}

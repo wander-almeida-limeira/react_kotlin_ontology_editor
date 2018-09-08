@@ -12,4 +12,5 @@ external interface ListItemProps : RProps {
     var button: Boolean
     var onClick:()-> Unit
     var className: String
+    var style: String
 }

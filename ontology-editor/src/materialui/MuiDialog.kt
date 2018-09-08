@@ -11,6 +11,7 @@ external val Dialog: RClass<DialogProps>
 
 external interface DialogProps : RProps {
     var className: String
+    var scroll: String
     var fullScreen: Boolean
     var open: Boolean
     var onClose:()-> Unit

@@ -10,6 +10,7 @@ external val Typography: RClass<TypographyProps>
 
 external interface TypographyProps : RProps {
     var color: String
+    var style: String
     var variant: String
     var component: String
     var className: String
