@@ -17,7 +17,6 @@
   <!--
       <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
   -->
-  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
   <script src="./d3.v4.min.js"></script>
   <script src="./d3_render/d3-interaction.js"></script>
   <script src="https://unpkg.com/react@latest/umd/react.development.js" crossorigin="anonymous"></script>
@@ -53,35 +52,30 @@
 -->
 <script>
      const {
-    //     Button,
          colors,
-         createMuiTheme,
-
-    //     CssBaseline,
-    //     Dialog,
-    //     DialogActions,
-    //     DialogContent,
-    //     DialogContentText,
-    //     DialogTitle,
-    //     Icon,
-    //     MuiThemeProvider,
-    //     Typography,
-    //     withStyles,
+         createMuiTheme
      } = window['material-ui'];
-     //const a = window['material-ui'].Dialog;
 
      const theme = createMuiTheme({
         palette: {
             primary: {
-                light: '#1e1e1e',
+                light: '#448afe',
                 main: '#1e1e1e',
                 dark: '#448afe',
             },
             secondary: {
                 light: '#448afe',
                 main: '#448afe',
-                dark: '#448afe',
+                dark: '#448afe'
             },
+            overrides: {
+              Slider: {
+                root: {
+                  color: 'red',
+                  background: 'red'
+                },
+              },
+            }
         },
     });
     const styles = theme => ({
@@ -93,8 +87,6 @@
             marginRight: theme.spacing.unit,
         },
     });
-
-    const react_cmps = {};
 </script>
 </body>
 </html>

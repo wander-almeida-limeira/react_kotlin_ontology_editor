@@ -12,6 +12,7 @@ external val Slider: RClass<SliderProps>
 external interface SliderProps : RProps {
     var className: String
     var color: String
+    var style: Any
     var value: Int
     var min: Int
     var max: Int

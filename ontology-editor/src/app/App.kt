@@ -1,7 +1,10 @@
 package app
 
-import react.*
 import materialui.MuiThemeProvider
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
 import tabGroup
 
 class App : RComponent<RProps, RState>() {

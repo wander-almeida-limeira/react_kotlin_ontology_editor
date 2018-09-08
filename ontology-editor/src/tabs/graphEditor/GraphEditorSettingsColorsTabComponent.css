@@ -1,0 +1,44 @@
+.save-graph-editor-settings-button {
+    width: 150px;
+    max-height: 38px;
+}
+
+.save-div {
+    justify-content: flex-end;
+    display: flex;
+}
+
+.app-bar-graph-editor-settings h2 {
+    padding-left: 20px;
+}
+
+.slider-color>div>div{
+    background: #448afe;
+}
+
+.slider-color>div>button{
+    background: #448afe;
+}
+
+.colors-main-div {
+    width: 200px;
+}
+
+.colors-div {
+    width: 48px;
+    height: 48px;
+}
+
+.colors-div-checked {
+    width: 48px;
+    height: 48px;
+    border: 1px solid white;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.colors-div-checked svg{
+    font-size: 30px;
+}

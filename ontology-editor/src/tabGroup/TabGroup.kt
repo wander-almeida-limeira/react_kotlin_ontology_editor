@@ -45,7 +45,7 @@ class TabGroup(props: TabGroupProps) : RComponent<TabGroupProps, TabGroupState>(
 
     override fun RBuilder.render() {
             AppBar {
-                attrs { title = "Placeholder" }
+                attrs { title = "Knowledge Graph Web Editor" }
                 Toolbar {
                     IconButton {
                         attrs {

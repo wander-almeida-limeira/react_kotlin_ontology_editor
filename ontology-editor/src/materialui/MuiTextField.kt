@@ -11,6 +11,8 @@ external val TextField: RClass<TextFieldProps>
 external interface TextFieldProps : RProps {
     var disabled: Boolean
     var label: String
+    var color: String
     var onClick:()-> Unit
     var className: String
+    var value: String
 }

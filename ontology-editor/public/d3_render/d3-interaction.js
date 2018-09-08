@@ -1,12 +1,25 @@
 let d3interface = {};
 
 var classColorCode = "#448afe"
+var classLabelColorCode = "white"
+var relationColourCode = "#6c9d60"
 
 d3interface.setClassColorCode = function (colorCode) {
     classColorCode = colorCode;
 }
 
+d3interface.setClassLabelColorCode = function (colorCode) {
+    classLabelColorCode = colorCode;
+}
+
+d3interface.setRelationColorCode = function (colorCode) {
+    relationColourCode = colorCode;
+}
+
 d3interface.render = function (json) {
+
+//d3.select("#d3svg").remove();
+d3.selectAll("#d3svg > *").remove();
 
 var svg = d3.select("#d3svg"),
     width = document.getElementById("d3svg").clientWidth,
@@ -132,7 +145,7 @@ var links_data = [
         .enter().append("line")
           .attr("stroke-width", 2)
           .attr("marker-end", "url(#end)")
-          .style("stroke", linkColour);
+          .style("stroke", relationColourCode);
 
     var linkText = svg.append("g")
         .attr("class", "link-label")
@@ -192,7 +205,7 @@ var links_data = [
             .attr("dy", 2)
             .attr("text-anchor", "middle")
             .text(function(d) {return d.name})
-            .attr("fill", "white");
+            .attr("fill", classLabelColorCode);
 
     svg.append("svg:defs").selectAll("marker")
         .data(["end"])      // Different link/path types can be defined here
@@ -205,7 +218,9 @@ var links_data = [
         .attr("markerHeight", 6)
         .attr("orient", "auto")
       .append("svg:path")
-        .attr("d", "M0,-5L10,0L0,5");
+        .attr("d", "M0,-5L10,0L0,5")
+        .attr("fill", relationColourCode)
+        .style("stroke", relationColourCode);
 
     var drag_handler = d3.drag()
         .on("start", drag_start)
@@ -213,17 +228,6 @@ var links_data = [
         .on("end", drag_end);
 
     drag_handler(node)
-
-    //Function to choose the line colour and thickness
-    //If the link type is "A" return green
-    //If the link type is "E" return red
-    function linkColour(d){
-        if(d.type == "A"){
-            return "#6c9d60";
-        } else {
-            return "#6c9d60";
-        }
-    }
 
     //drag handler
     //d is the node

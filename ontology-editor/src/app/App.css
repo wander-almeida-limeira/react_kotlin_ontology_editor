@@ -192,8 +192,6 @@ circle:hover, rect:hover{
 }
 
 .svgArea path {
-    fill:   #6c9d60;
-    stroke: #6c9d60;
     stroke-width: 2;
     z-index: 1;
 }

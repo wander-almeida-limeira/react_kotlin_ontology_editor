@@ -1,8 +1,11 @@
 
 import materialui.Button
 import materialui.TextField
-import react.*
-import react.dom.*
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
+import react.dom.div
 
 interface SettingsProps : RProps {
 
@@ -24,13 +27,20 @@ class Settings(props: TabGroupProps) : RComponent<TabGroupProps, TabGroupState>(
 
         div(classes="row align-items-center") {
             div(classes="col") {
-                TextField() {
-                    attrs { label = "Placeholder" }
+                TextField {
+                    attrs {
+                        label = "Placeholder"
+                        color = "secondary"
+                    }
                 }
             }
             div(classes="col") {
-                Button() {
-                    attrs { disabled = false; variant = "outlined" }
+                Button {
+                    attrs {
+                        disabled = false
+                        variant = "outlined"
+                        color = "secondary"
+                    }
                     +"You clicked times"
                 }
             }

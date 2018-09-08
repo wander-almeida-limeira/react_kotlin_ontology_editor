@@ -10,4 +10,5 @@ external val Toolbar: RClass<ToolbarProps>
 
 external interface ToolbarProps : RProps {
     var className: String
+    var color: String
 }
