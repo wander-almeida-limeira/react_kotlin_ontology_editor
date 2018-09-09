@@ -42,6 +42,7 @@ class GraphEditorSettings(props: GraphEditorSettingsProps) : RComponent<GraphEdi
             }
             AppBar {
                 attrs {
+                    color = "secondary"
                     className="app-bar-graph-editor-settings"
                 }
                 Toolbar {
@@ -56,7 +57,7 @@ class GraphEditorSettings(props: GraphEditorSettingsProps) : RComponent<GraphEdi
                             }
                             Tabs {
                                 attrs {
-                                    className = "graph-settings-tab"
+                                    className = "graph-settings-tab indicator-header"
                                     value = state.tab
                                     scrollable = true
                                     scrollButtons = "auto"
@@ -70,10 +71,12 @@ class GraphEditorSettings(props: GraphEditorSettingsProps) : RComponent<GraphEdi
                                 Tab {
                                     attrs { label = "Element Size" }
                                 }
+                                Tab {
+                                    attrs { label = "Shapes" }
+                                }
                             }
                             IconButton {
                                 attrs {
-                                    color = "secondary"
                                     onClick = {
                                         props.settingsInterface.openCloseSettings()
                                     }
@@ -92,7 +95,7 @@ class GraphEditorSettings(props: GraphEditorSettingsProps) : RComponent<GraphEdi
                         }
                     }
                 })
-            if (state.tab == 2) settingsComponent()
+
         }
     }
 }

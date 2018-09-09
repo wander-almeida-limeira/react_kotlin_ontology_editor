@@ -8,3 +8,7 @@
     width: 100%;
     height: calc(100vh - (64px));
 }
+
+.indicator-header [class*="TabIndicator"] {
+    background: #448afe;
+}

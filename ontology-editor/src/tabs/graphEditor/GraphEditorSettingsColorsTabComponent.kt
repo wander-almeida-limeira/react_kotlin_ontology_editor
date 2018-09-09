@@ -27,6 +27,7 @@ interface GraphEditorSettingsColorsTabState : RState {
     var classLabelShadeValue: Int
     var relationShadeValue: Int
     var openColorPalette: Boolean
+    var openColorRule: Boolean
 }
 class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : RComponent<GraphEditorSettingsColorsTabProps, GraphEditorSettingsColorsTabState>(props) {
 
@@ -40,6 +41,7 @@ class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : R
         classLabelShadeValue = 12
         relationShadeValue = 12
         openColorPalette = false
+        openColorRule = false
     }
 
     fun setClassColorCode(code: String) = js("""
@@ -131,8 +133,10 @@ class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : R
                             }
                             FormControlLabel {
                                 attrs {
+                                    color = "primary"
                                     control = Switch {
                                         attrs {
+                                            color = "primary"
                                             checked = state.classCustomValue
                                             onChange = { event: Event, eventValue: Boolean ->
                                                 setState {
@@ -140,7 +144,6 @@ class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : R
                                                 }
                                             }
                                             value = "classCustomColorChecked"
-                                            color = "secondary"
                                         }
                                     }
                                     label = "Custom class color code"
@@ -186,7 +189,6 @@ class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : R
                                     attrs {
                                         className = "mt-2 graph-colors-setting-text-field"
                                         label = "Color code"
-                                        color = "secondary"
                                         value = getColorPropertyValue(state.selectedClassColorValue, "class").toString()
                                     }
                                 }
@@ -195,14 +197,13 @@ class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : R
                                     attrs {
                                         className = "mt-2 graph-colors-setting-text-field"
                                         label = "Custom color code"
-                                        color = "secondary"
                                         value = getColorPropertyValue(state.selectedClassColorValue, "class").toString()
                                     }
                                 }
                                 Button {
                                     attrs {
+                                        color = "primary"
                                         className = "mt-3"
-                                        color = "secondary"
                                         onClick = {
                                             setState {
                                                 openColorPalette = true
@@ -225,6 +226,7 @@ class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : R
                                 attrs {
                                     control = Switch {
                                         attrs {
+                                            color = "primary"
                                             checked = state.relationCustomValue
                                             onChange = { event: Event, eventValue: Boolean ->
                                                 setState {
@@ -232,7 +234,6 @@ class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : R
                                                 }
                                             }
                                             value = "classCustomColorChecked"
-                                            color = "secondary"
                                         }
                                     }
                                     label = "Custom relation color code"
@@ -278,7 +279,6 @@ class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : R
                                     attrs {
                                         className = "mt-2 graph-colors-setting-text-field"
                                         label = "Color code"
-                                        color = "secondary"
                                         value = getColorPropertyValue(state.selectedRelationColorValue, "relation").toString()
                                     }
                                 }
@@ -287,14 +287,13 @@ class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : R
                                     attrs {
                                         className = "mt-2 graph-colors-setting-text-field"
                                         label = "Custom color code"
-                                        color = "secondary"
                                         value = getColorPropertyValue(state.selectedClassColorValue, "class").toString()
                                     }
                                 }
                                 Button {
                                     attrs {
+                                        color = "primary"
                                         className = "mt-3"
-                                        color = "secondary"
                                         onClick = {
                                             setState {
                                                 openColorPalette = true
@@ -317,6 +316,7 @@ class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : R
                                 attrs {
                                     control = Switch {
                                         attrs {
+                                            color = "primary"
                                             checked = state.classLabelCustomValue
                                             onChange = { event: Event, eventValue: Boolean ->
                                                 setState {
@@ -324,7 +324,6 @@ class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : R
                                                 }
                                             }
                                             value = "classCustomColorChecked"
-                                            color = "secondary"
                                         }
                                     }
                                     label = "Custom class label color code"
@@ -370,7 +369,6 @@ class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : R
                                     attrs {
                                         className = "mt-2 graph-colors-setting-text-field"
                                         label = "Color code"
-                                        color = "secondary"
                                         value = getColorPropertyValue(state.selectedClassLabelColorValue, "classLabel").toString()
                                     }
                                 }
@@ -379,14 +377,13 @@ class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : R
                                     attrs {
                                         className = "mt-2 graph-colors-setting-text-field"
                                         label = "Custom color code"
-                                        color = "secondary"
                                         value = getColorPropertyValue(state.selectedClassColorValue, "class").toString()
                                     }
                                 }
                                 Button {
                                     attrs {
+                                        color = "primary"
                                         className = "mt-3"
-                                        color = "secondary"
                                         onClick = {
                                             setState {
                                                 openColorPalette = true
@@ -403,6 +400,14 @@ class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : R
                         override fun openCloseColorPalette() {
                             setState {
                                 openColorPalette = !openColorPalette
+                            }
+                        }
+                    })
+                if (state.openColorRule)
+                    graphEditorColorRuleComponent(state.openColorRule, object : ColorRuleInterface {
+                        override fun openCloseColorRule() {
+                            setState {
+                                openColorRule = !openColorRule
                             }
                         }
                     })
@@ -425,9 +430,11 @@ class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : R
                         }
                         Button {
                             attrs {
-                                color = "secondary"
+                                color = "primary"
                                 onClick = {
-
+                                    setState {
+                                        openColorRule = !openColorRule
+                                    }
                                 }
                             }
                             +"Add new color rule"
@@ -438,7 +445,7 @@ class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : R
                     div (classes="col align-self-end p-4 save-div") {
                         Button {
                             attrs {
-                                color = "secondary"
+                                color = "primary"
                                 className = "save-graph-editor-settings-button"
                                 variant = "contained"
                                 onClick = {

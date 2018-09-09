@@ -10,5 +10,6 @@ external val Tab: RClass<TabProps>
 
 external interface TabProps : RProps {
     var label: String
+    var color: String
     var className: String
 }

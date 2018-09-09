@@ -18,8 +18,7 @@ interface GraphEditorColorPaletteProps : RProps {
     var openColorPalette: Boolean
 }
 
-interface GraphEditorColorPaletteState : RState {
-}
+interface GraphEditorColorPaletteState : RState {}
 
 class GraphEditorColorPalette(props: GraphEditorColorPaletteProps) : RComponent<GraphEditorColorPaletteProps, GraphEditorColorPaletteState>(props) {
 
@@ -75,8 +74,7 @@ class GraphEditorColorPalette(props: GraphEditorColorPaletteProps) : RComponent<
         }
     }
 
-    override fun GraphEditorColorPaletteState.init(props: GraphEditorColorPaletteProps) {
-    }
+    override fun GraphEditorColorPaletteState.init(props: GraphEditorColorPaletteProps) {}
 
     override fun RBuilder.render() {
         Dialog{
@@ -174,7 +172,6 @@ class GraphEditorColorPalette(props: GraphEditorColorPaletteProps) : RComponent<
             DialogActions {
                 Button {
                     attrs {
-                        color = "secondary"
                         className = "save-graph-editor-settings-button"
                         variant = "contained"
                         onClick = {

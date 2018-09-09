@@ -13,4 +13,6 @@ external interface InputProps : RProps {
     var placeholder: String
     var onClick:()-> Unit
     var className: String
+    var name: String
+    var id: String
 }

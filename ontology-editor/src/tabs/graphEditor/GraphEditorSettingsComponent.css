@@ -24,3 +24,7 @@ header.app-bar-graph-editor-settings {
 .graph-settings-tab {
     width: 70%;
 }
+
+.indicator-header [class*="TabIndicator"] {
+    background: #448afe;
+}

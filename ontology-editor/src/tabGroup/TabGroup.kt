@@ -45,7 +45,7 @@ class TabGroup(props: TabGroupProps) : RComponent<TabGroupProps, TabGroupState>(
 
     override fun RBuilder.render() {
             AppBar {
-                attrs { title = "Knowledge Graph Web Editor" }
+                attrs { color = "secondary"; title = "Knowledge Graph Web Editor" }
                 Toolbar {
                     IconButton {
                         attrs {
@@ -58,7 +58,10 @@ class TabGroup(props: TabGroupProps) : RComponent<TabGroupProps, TabGroupState>(
                     img(alt = "Ontology editor logo", src = editorLogo, classes = "logo") {}
                     Tabs {
                         attrs {
-                            value = state.tab; scrollable = true; scrollButtons = "auto"
+                            className = "indicator-header"
+                            value = state.tab
+                            scrollable = true
+                            scrollButtons = "auto"
                             onChange = { event: Event, eventValue: Int ->
                                 tabChange(eventValue)
                             }
