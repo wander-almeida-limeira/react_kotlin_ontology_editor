@@ -92,7 +92,7 @@ class GraphEditorColorRule(props: GraphEditorColorRuleProps) : RComponent<GraphE
                                         onChange = { event: dynamic, eventValue: Boolean ->
                                             val eventTargetValue = event.target.value
                                             setState {
-                                                classType = eventTargetValue
+                                                //classType = eventTargetValue
                                             }
                                         }
                                         //inputProps = JSON.parse("""{name: "age", id: "age-simple"}""")

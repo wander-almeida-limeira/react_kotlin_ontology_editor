@@ -4,9 +4,9 @@ package materialui
 
 import react.RClass
 import react.RProps
+external val MenuItem: RClass<MenuItemProps>
 
 @JsName("default")
-external val MenuItem: RClass<MenuItemProps>
 
 external interface MenuItemProps : RProps {
     var disabled: Boolean
