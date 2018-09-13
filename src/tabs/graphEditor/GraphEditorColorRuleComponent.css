@@ -1,3 +1,7 @@
 .dialog-graph-editor-color-rule-content, .dialog-graph-editor-color-rule-content div{
     //background: #f5f5f5;
 }
+
+.element-type-select {
+    width: 200px;
+}

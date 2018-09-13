@@ -18,4 +18,5 @@ external interface SelectProps : RProps {
     var className: String
     var input: ReactElement
     var inputProps: Any
+    var native: Boolean
 }

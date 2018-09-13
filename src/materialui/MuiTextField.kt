@@ -2,6 +2,7 @@
 
 package materialui
 
+import org.w3c.dom.events.Event
 import react.RClass
 import react.RProps
 
@@ -13,6 +14,7 @@ external interface TextFieldProps : RProps {
     var label: String
     var color: String
     var onClick:()-> Unit
+    var onChange: (Event, String) -> Unit
     var className: String
     var value: String
 }

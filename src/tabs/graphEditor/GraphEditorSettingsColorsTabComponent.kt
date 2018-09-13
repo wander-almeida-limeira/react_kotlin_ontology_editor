@@ -2,6 +2,7 @@
 import kotlinx.html.style
 import materialui.*
 import materialui.Icons.MuiCheckIcon
+import model.ColorRule
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
 import react.*
@@ -28,6 +29,9 @@ interface GraphEditorSettingsColorsTabState : RState {
     var relationShadeValue: Int
     var openColorPalette: Boolean
     var openColorRule: Boolean
+    var openBorderColorRule: Boolean
+    var colorRuleArray: MutableList<ColorRule>
+    var borderColorRuleArray: MutableList<Any>
 }
 class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : RComponent<GraphEditorSettingsColorsTabProps, GraphEditorSettingsColorsTabState>(props) {
 
@@ -42,6 +46,8 @@ class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : R
         relationShadeValue = 12
         openColorPalette = false
         openColorRule = false
+        colorRuleArray = mutableListOf()
+        borderColorRuleArray = mutableListOf()
     }
 
     fun setClassColorCode(code: String) = js("""
@@ -61,6 +67,11 @@ class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : R
 
     fun d3Render() = js("""
         var result = d3interface.render();
+        return result; """)
+
+    fun setClassColorRule(colorRuleArray: MutableList<ColorRule>) = js("""
+        var result = d3interface.setClassColorRule(colorRuleArray);
+        d3interface.render();
         return result; """)
 
     fun getShadeValue(elementType: String): String {
@@ -120,6 +131,10 @@ class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : R
         return ""
     }
 
+    fun deleteCustomBorderColorRule(): String {
+        return ""
+    }
+
     override fun RBuilder.render() {
             div (classes="container-fluid") {
                 div(classes = "row ") {
@@ -146,14 +161,14 @@ class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : R
                                             value = "classCustomColorChecked"
                                         }
                                     }
-                                    label = "Custom class color code"
+                                    label = "Custom class colorCode code"
                                 }
                             }
                             if (!state.classCustomValue) {
                                 Typography { +"Shade:" }
                                 Slider {
                                     attrs {
-                                        className = "slider-color"
+                                        className = "slider-colorCode"
                                         value = state.classShadeValue
                                         min = 0
                                         max = 13
@@ -196,7 +211,7 @@ class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : R
                                 TextField {
                                     attrs {
                                         className = "mt-2 graph-colors-setting-text-field"
-                                        label = "Custom color code"
+                                        label = "Custom colorCode code"
                                         value = getColorPropertyValue(state.selectedClassColorValue, "class").toString()
                                     }
                                 }
@@ -210,7 +225,7 @@ class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : R
                                             }
                                         }
                                     }
-                                    +"See color palette"
+                                    +"See colorCode palette"
                                 }
                             }
                         }
@@ -236,14 +251,14 @@ class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : R
                                             value = "classCustomColorChecked"
                                         }
                                     }
-                                    label = "Custom relation color code"
+                                    label = "Custom relation colorCode code"
                                 }
                             }
                             if (!state.relationCustomValue) {
                                 Typography { +"Shade:" }
                                 Slider {
                                     attrs {
-                                        className = "slider-color"
+                                        className = "slider-colorCode"
                                         value = state.relationShadeValue
                                         min = 0
                                         max = 13
@@ -286,7 +301,7 @@ class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : R
                                 TextField {
                                     attrs {
                                         className = "mt-2 graph-colors-setting-text-field"
-                                        label = "Custom color code"
+                                        label = "Custom colorCode code"
                                         value = getColorPropertyValue(state.selectedClassColorValue, "class").toString()
                                     }
                                 }
@@ -300,7 +315,7 @@ class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : R
                                             }
                                         }
                                     }
-                                    +"See color palette"
+                                    +"See colorCode palette"
                                 }
                             }
                         }
@@ -326,14 +341,14 @@ class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : R
                                             value = "classCustomColorChecked"
                                         }
                                     }
-                                    label = "Custom class label color code"
+                                    label = "Custom class label colorCode code"
                                 }
                             }
                             if (!state.classLabelCustomValue) {
                                 Typography { +"Shade:" }
                                 Slider {
                                     attrs {
-                                        className = "slider-color"
+                                        className = "slider-colorCode"
                                         value = state.classLabelShadeValue
                                         min = 0
                                         max = 13
@@ -376,7 +391,7 @@ class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : R
                                 TextField {
                                     attrs {
                                         className = "mt-2 graph-colors-setting-text-field"
-                                        label = "Custom color code"
+                                        label = "Custom colorCode code"
                                         value = getColorPropertyValue(state.selectedClassColorValue, "class").toString()
                                     }
                                 }
@@ -390,7 +405,7 @@ class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : R
                                             }
                                         }
                                     }
-                                    +"See color palette"
+                                    +"See colorCode palette"
                                 }
                             }
                         }
@@ -405,14 +420,15 @@ class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : R
                     })
                 if (state.openColorRule)
                     graphEditorColorRuleComponent(state.openColorRule, object : ColorRuleInterface {
-                        override fun openCloseColorRule() {
+                        override fun openCloseColorRule(colorRuleArray: MutableList<ColorRule>) {
                             setState {
+                                state.colorRuleArray.addAll(colorRuleArray)
                                 openColorRule = !openColorRule
                             }
                         }
                     })
                 div(classes = "row") {
-                    div(classes = "col p-4 d-flex align-items-center") {
+                    div(classes = "col pt-4 d-flex align-items-center") {
                         Typography {
                             attrs {
                                 className = "m-2"
@@ -420,11 +436,18 @@ class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : R
                             }
                             +"Custom Color Rules:"
                         }
-                        Chip{
-                            attrs {
-                                label = "Class Name"
-                                onDelete = {
-                                    deleteCustomColorRule()
+                        if (state.colorRuleArray != null) {
+                            for (rule in state.colorRuleArray) {
+                                Chip {
+                                    attrs {
+                                        className = "ml-2"
+                                        avatar = Avatar { attrs { style = kotlinext.js.js { background = rule.colorCode } } }
+                                        if (rule.elementType == 1)
+                                        label = "Class: " + rule.elementValue
+                                        onDelete = {
+                                            deleteCustomColorRule()
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -437,7 +460,42 @@ class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : R
                                     }
                                 }
                             }
-                            +"Add new color rule"
+                            +"Add new colorCode rule"
+                        }
+                    }
+                }
+                div(classes = "row") {
+                    div(classes = "col pt-4 d-flex align-items-center") {
+                        Typography {
+                            attrs {
+                                className = "m-2"
+                                variant = "title"
+                            }
+                            +"Custom Border Color Rules:"
+                        }
+                        if (state.borderColorRuleArray != null) {
+                            for (rule in state.borderColorRuleArray) {
+                                Chip {
+                                    attrs {
+                                        avatar = Avatar { attrs { style = kotlinext.js.js { background = getColorPropertyValue("red", "class") } } }
+                                        label = "Class Name"
+                                        onDelete = {
+                                            deleteCustomBorderColorRule()
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        Button {
+                            attrs {
+                                color = "primary"
+                                onClick = {
+                                    setState {
+                                        openBorderColorRule = !openBorderColorRule
+                                    }
+                                }
+                            }
+                            +"Add new border colorCode rule"
                         }
                     }
                 }
@@ -452,6 +510,7 @@ class GraphEditorSettingsColorsTab(props: GraphEditorSettingsColorsTabProps) : R
                                     if (state.selectedClassColorValue != "") setClassColorCode(getColorPropertyValue(state.selectedClassColorValue, "class").toString())
                                     if (state.selectedRelationColorValue != "") setRelationColorCode(getColorPropertyValue(state.selectedRelationColorValue, "relation").toString())
                                     if (state.selectedClassLabelColorValue != "") setClassLabelColorCode(getColorPropertyValue(state.selectedClassLabelColorValue, "classLabel").toString())
+                                    if (state.colorRuleArray.size > 0) setClassColorRule(state.colorRuleArray)
                                     d3Render()
                                     props.settingsInterface.openCloseSettings()
                                 }

@@ -13,4 +13,6 @@ external interface ChipProps : RProps {
     var onDelete:()-> Unit
     var className: String
     var label: String
+    var style: String
+    var avatar: Any
 }

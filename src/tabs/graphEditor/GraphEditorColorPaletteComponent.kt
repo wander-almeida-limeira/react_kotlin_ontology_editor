@@ -79,7 +79,7 @@ class GraphEditorColorPalette(props: GraphEditorColorPaletteProps) : RComponent<
     override fun RBuilder.render() {
         Dialog{
             attrs {
-                className="dialog-graph-editor-color-palette"
+                className="dialog-graph-editor-colorCode-palette"
                 scroll = "paper"
                 open = props.openColorPalette
                 onClose = {
@@ -98,7 +98,7 @@ class GraphEditorColorPalette(props: GraphEditorColorPaletteProps) : RComponent<
                                     attrs { style = kotlinext.js.js { background = getColorPropertyValue(muiColor, "500") } }
                                     div(classes = "container colors-div-palette-height") {
                                         div(classes = "row justify-content-between colors-div-palette-height") {
-                                            div(classes = "col palette-color-code-grid") {
+                                            div(classes = "col palette-colorCode-code-grid") {
                                                 div(classes = "row") {
                                                     Typography {
                                                         attrs {
@@ -120,7 +120,7 @@ class GraphEditorColorPalette(props: GraphEditorColorPaletteProps) : RComponent<
                                                     }
                                                 }
                                             }
-                                            div(classes = "col align-self-end palette-color-code-end") {
+                                            div(classes = "col align-self-end palette-colorCode-code-end") {
                                                 Typography {
                                                     attrs {
                                                         className = "m-2"
@@ -138,7 +138,7 @@ class GraphEditorColorPalette(props: GraphEditorColorPaletteProps) : RComponent<
                                         attrs { style = kotlinext.js.js { background = getColorPropertyValue(muiColor, shade) } }
                                         div(classes = "container colors-div-palette-height") {
                                             div(classes = "row justify-content-between colors-div-palette-height") {
-                                                div(classes = "col palette-color-code-grid") {
+                                                div(classes = "col palette-colorCode-code-grid") {
                                                     div(classes = "row align-items-end") {
                                                         Typography {
                                                             attrs {
@@ -150,7 +150,7 @@ class GraphEditorColorPalette(props: GraphEditorColorPaletteProps) : RComponent<
                                                         }
                                                     }
                                                 }
-                                                div(classes = "col align-self-end palette-color-code-end") {
+                                                div(classes = "col align-self-end palette-colorCode-code-end") {
                                                     Typography {
                                                         attrs {
                                                             className = "m-2"

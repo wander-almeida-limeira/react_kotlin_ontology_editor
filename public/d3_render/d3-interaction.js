@@ -3,6 +3,7 @@ let d3interface = {};
 var classColorCode = "#448afe"
 var classLabelColorCode = "white"
 var relationColourCode = "#6c9d60"
+var colorRuleArray = []
 
 d3interface.setClassColorCode = function (colorCode) {
     classColorCode = colorCode;
@@ -14,6 +15,10 @@ d3interface.setClassLabelColorCode = function (colorCode) {
 
 d3interface.setRelationColorCode = function (colorCode) {
     relationColourCode = colorCode;
+}
+
+d3interface.setClassColorRule = function (colorRules) {
+    colorRuleArray = colorRules.toArray()
 }
 
 d3interface.render = function (json) {
@@ -175,7 +180,7 @@ var links_data = [
             .attr("r", radius)
             .attr("stroke", "#adadad")
             .attr("stroke-width", "2px")
-            .attr("fill", classColorCode);
+            .attr("fill", getClassColorCode);
 
     } else if (nodeType == "rect") {
         node = svg.append("g")
@@ -245,6 +250,18 @@ var links_data = [
         //Math.max(radius, Math.min(height - radius, d3.event.y));
     }
 
+    function getClassColorCode(d) {
+      if (colorRuleArray.length > 0) {
+        for (var i = 0; i < colorRuleArray.length; i++) {
+            if (d.name.toUpperCase() == colorRuleArray[i].elementValue.toUpperCase()) {
+                return colorRuleArray[i].colorCode;
+            }
+            return classColorCode;
+        }
+      } else {
+        return classColorCode;
+      }
+    }
 
     function drag_end(d) {
       if (!d3.event.active) simulation.alphaTarget(0);
