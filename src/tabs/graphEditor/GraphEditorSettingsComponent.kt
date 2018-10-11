@@ -1,6 +1,6 @@
 
-import materialui.*
-import materialui.Icons.MuiCloseIcon
+import externalComponents.materialui.*
+import externalComponents.materialui.Icons.*
 import org.w3c.dom.events.Event
 import react.*
 import react.dom.div

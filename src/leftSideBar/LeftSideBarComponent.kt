@@ -1,7 +1,7 @@
 
 import react.*
-import materialui.*
-import materialui.Icons.*
+import externalComponents.materialui.*
+import externalComponents.materialui.Icons.*
 
 interface LeftSideBarComponentProps : RProps {
 

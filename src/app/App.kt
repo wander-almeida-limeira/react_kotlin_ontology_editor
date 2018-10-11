@@ -1,11 +1,23 @@
 package app
 
-import materialui.MuiThemeProvider
-import react.RBuilder
-import react.RComponent
-import react.RProps
-import react.RState
+import externalComponents.materialui.MuiThemeProvider
+import kotlinext.js.jsObject
+import ktypings.redux.connect
+import react.*
+import store.State
 import tabGroup
+
+val appConnect =
+        connect<App.AppProps, State>(
+                { state: State, _ ->
+                    jsObject{clickCount = state.clickCount}
+                }, { dispatch, _ ->
+            jsObject {
+                incAction = {
+                    dispatch(store.inc())
+                }
+            }
+        })
 
 class App : RComponent<RProps, RState>() {
     override fun RBuilder.render() {
@@ -20,6 +32,8 @@ class App : RComponent<RProps, RState>() {
         }*/
 
     }
+    data class AppProps(var clickCount: Int = 0, var incAction: () -> Unit = {}): RProps
 }
 
 fun RBuilder.app() = child(App::class) {}
+val appConnected: RClass<App.AppProps> = appConnect(App::class.js)

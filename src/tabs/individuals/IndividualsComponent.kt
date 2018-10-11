@@ -1,8 +1,7 @@
 
-import materialui.*
-import materialui.Icons.MuiExpandLessIcon
-import materialui.Icons.MuiExpandMoreIcon
-import materialui.Icons.MuiSearchIcon
+import externalComponents.materialui.*
+import externalComponents.materialui.Icons.*
+import org.w3c.dom.events.Event
 import react.*
 
 interface IndividualsComponentProps : RProps {
@@ -11,12 +10,18 @@ interface IndividualsComponentProps : RProps {
 
 interface IndividualsComponentState : RState {
     var open: Boolean
+    var src: Any
 }
+
+fun getJson() = js("""
+        var result = jsonLdInterface.getJson();
+        return result; """)
 
 class IndividualsComponent(props: IndividualsComponentProps) : RComponent<IndividualsComponentProps, IndividualsComponentState>(props) {
 
     override fun IndividualsComponentState.init(props: IndividualsComponentProps) {
         open = false
+        src = getJson()
     }
 
     override fun componentDidMount() {}
@@ -75,6 +80,20 @@ class IndividualsComponent(props: IndividualsComponentProps) : RComponent<Indivi
                 }
                 ListItemText {
                     attrs { inset = true; primary = "Sent mail" }
+                }
+            }
+        }
+
+        TreeView{
+            attrs {
+                src =  state.src
+                displayDataTypes = false
+                name = "teste"
+                onSelect = { event: Event ->
+                    console.log(event)
+                }
+                onEdit = { event: Event ->
+                    console.log(event)
                 }
             }
         }

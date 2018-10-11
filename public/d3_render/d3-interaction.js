@@ -35,6 +35,67 @@ var svg = d3.select("#d3svg"),
     //var nodeType = "rect";
     //let nodeType = "custom";
 
+    function recursiveJsonFunction(json) {
+        Object.entries(json).map(([n1, n2]) => {
+            if (typeof n2 == 'object') {
+                recursiveJsonFunction(n2);
+            } else if (Array.isArray(n2)) {
+                for(var i=0; i < n2.length; i++){
+                    recursiveJsonFunction(n2[i]);
+                }
+            } else {
+                if(n1 == "@type") {
+                    console.log(n1);
+                    console.log(n2);
+                    console.log("-----");
+                }
+            }
+        });
+    }
+
+    function convertJsonLD() {
+
+        let jsonArray = jsonLdInterface.getJson();
+
+        jsonld.expand(jsonArray, function(err, expanded) {
+            console.log(expanded);
+        });
+
+        // flatten a document
+        // see: http://json-ld.org/spec/latest/json-ld/#flattened-document-form
+        //jsonld.flatten(jsonArray, (err, flattened) => {
+         //   console.log(flattened);
+        //});
+
+        // canonize (normalize) a document using the RDF Dataset Normalization Algorithm
+        // (URDNA2015), see: http://json-ld.github.io/normalization/spec/
+        //jsonld.canonize(jsonArray, {
+        //  algorithm: 'URDNA2015',
+        //  format: 'application/n-quads'
+        //}, (err, canonized) => {
+         // console.log(canonized);
+        //});
+
+        // serialize a document to N-Quads (RDF)
+        //jsonld.toRDF(jsonArray, {format: 'application/n-quads'}, (err, nquads) => {
+         // console.log(nquads);
+        //});
+
+        //recursiveJsonFunction(jsonArray);
+
+        var notesKey = Object.keys(jsonArray)
+
+        for(var i=0; i < notesKey.length; i++){
+        //console.log(notesKey[i]);
+          var notes = jsonArray[notesKey[i]];
+          for (var j=0; j < notes.length ; j++){
+           //console.log(notes[j]);
+          }
+        }
+    }
+
+    convertJsonLD();
+
 var nodes_data =  [
     {"name": "Componente", "sex": "F"},
     {"name": "Sistema de Busca", "sex": "M"},
@@ -256,8 +317,8 @@ var links_data = [
             if (d.name.toUpperCase() == colorRuleArray[i].elementValue.toUpperCase()) {
                 return colorRuleArray[i].colorCode;
             }
-            return classColorCode;
         }
+        return classColorCode;
       } else {
         return classColorCode;
       }

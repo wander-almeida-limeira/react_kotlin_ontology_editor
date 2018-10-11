@@ -1,6 +1,5 @@
 
-import materialui.Button
-import materialui.TextField
+import externalComponents.materialui.*
 import react.RBuilder
 import react.RComponent
 import react.RProps

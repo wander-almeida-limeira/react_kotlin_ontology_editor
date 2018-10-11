@@ -1,8 +1,8 @@
 
-import materialui.*
+import externalComponents.materialui.*
+import externalComponents.materialui.Icons.*
 import react.*
 import react.dom.*
-import materialui.Icons.*
 
 interface LeftPanelGraphProps : RProps {
 

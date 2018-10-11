@@ -1,7 +1,6 @@
 import kotlinx.html.style
-import materialui.*
-import materialui.Icons.MuiCheckIcon
-import materialui.Icons.MuiCloseIcon
+import externalComponents.materialui.*
+import externalComponents.materialui.Icons.*
 import model.ColorRule
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
