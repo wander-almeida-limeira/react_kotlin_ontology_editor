@@ -13,6 +13,11 @@ import kotlin.browser.document
 
 fun main(args: Array<String>) {
 
+    @JsName("wefjksdjn")
+    fun wefjksdjn() {
+        console.log("helloWithGreeting")
+    }
+
     requireAll(require.context("src", true, js("/\\.css$/")))
 
     val store = Redux.createStore(::mainReducer, State(),

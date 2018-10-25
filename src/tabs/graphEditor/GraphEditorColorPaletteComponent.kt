@@ -1,8 +1,7 @@
 
+import externalComponents.materialui.*
 import kotlinext.js.js
 import kotlinx.html.style
-import externalComponents.materialui.*
-import externalComponents.materialui.Icons.*
 import react.RBuilder
 import react.RComponent
 import react.RProps

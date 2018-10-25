@@ -4,6 +4,63 @@ var classColorCode = "#448afe"
 var classLabelColorCode = "white"
 var relationColourCode = "#6c9d60"
 var colorRuleArray = []
+var nodes_data =  [];
+var links_data = [];
+
+function loader(url, doLoad) {
+    $.getJSON("http://localhost:8080/owl-api/ontology/parse", doLoad)
+    .error(function() {
+        alert("Could not load "+url);
+    });
+}
+
+function loader2(doLoad) {
+    //$.getJSON("http://localhost:10555/classes?node=http%3A%2F%2Fsemantic.icmc.usp.br%2Fsustenagro%23TechnologicalEfficiencyInTheIndustrial", doLoad)
+    //.error(function() {
+    //    alert("Could not load "+url);
+    //});
+
+        $.ajax({
+            url: "http://localhost:10555/classes?node=http%3A%2F%2Fsemantic.icmc.usp.br%2Fsustenagro%23TechnologicalEfficiencyInTheIndustrial",
+            accepts: {
+                json: 'application/ld+json, application/json'
+            },
+            // ensure Accept header is very specific for JSON-LD/JSON
+            headers: {
+                'Accept': 'application/ld+json, application/json'
+            },
+            dataType: 'json',
+            crossDomain: true,
+            success: function(data, textStatus, jqXHR) {
+                console.log(data);
+                console.log(textStatus);
+                console.log(jqXHR);
+            },
+            error: function(jqXHR, textStatus, err) {
+            }
+        });
+}
+
+
+function loadGraph(url, fn) {
+    function doLoad(result) {
+    console.log(result);
+		nodes_data = result.nodes;
+		links_data = result.links;
+		renderAfterLoading();
+    }
+    loader(url, doLoad);
+}
+
+function loadGraph2() {
+    function doLoad(result) {
+    console.log(result);
+		//nodes_data = result.nodes;
+		//links_data = result.links;
+		//renderAfterLoading();
+    }
+    loader2(doLoad);
+}
 
 d3interface.setClassColorCode = function (colorCode) {
     classColorCode = colorCode;
@@ -26,6 +83,14 @@ d3interface.render = function (json) {
 //d3.select("#d3svg").remove();
 d3.selectAll("#d3svg > *").remove();
 
+//loadGraph();
+//loadGraph2();
+
+renderAfterLoading();
+
+}
+
+function renderAfterLoading() {
 var svg = d3.select("#d3svg"),
     width = document.getElementById("d3svg").clientWidth,
     height = document.getElementById("d3svg").clientHeight;
@@ -35,31 +100,13 @@ var svg = d3.select("#d3svg"),
     //var nodeType = "rect";
     //let nodeType = "custom";
 
-    function recursiveJsonFunction(json) {
-        Object.entries(json).map(([n1, n2]) => {
-            if (typeof n2 == 'object') {
-                recursiveJsonFunction(n2);
-            } else if (Array.isArray(n2)) {
-                for(var i=0; i < n2.length; i++){
-                    recursiveJsonFunction(n2[i]);
-                }
-            } else {
-                if(n1 == "@type") {
-                    console.log(n1);
-                    console.log(n2);
-                    console.log("-----");
-                }
-            }
-        });
-    }
-
     function convertJsonLD() {
 
         let jsonArray = jsonLdInterface.getJson();
 
-        jsonld.expand(jsonArray, function(err, expanded) {
-            console.log(expanded);
-        });
+        //jsonld.expand(jsonArray, function(err, expanded) {
+        //    console.log(expanded);
+        //});
 
         // flatten a document
         // see: http://json-ld.org/spec/latest/json-ld/#flattened-document-form
@@ -81,89 +128,41 @@ var svg = d3.select("#d3svg"),
          // console.log(nquads);
         //});
 
-        //recursiveJsonFunction(jsonArray);
-
         var notesKey = Object.keys(jsonArray)
 
+        //criando o array de nós
         for(var i=0; i < notesKey.length; i++){
-        //console.log(notesKey[i]);
+          let node = notesKey[i];
           var notes = jsonArray[notesKey[i]];
           for (var j=0; j < notes.length ; j++){
-           //console.log(notes[j]);
+              let node = notes[j];
+              var nodeObj = new Object();
+              nodeObj.nodeName = node["@id"].split("#")[1].toString();
+              nodes_data[j] = nodeObj;
+          }
+        }
+
+        //criando o array de links
+        for(var i=0; i < notesKey.length; i++){
+          let node = notesKey[i];
+          var notes = jsonArray[notesKey[i]];
+          var count = 0;
+          for (var j=0; j < notes.length ; j++){
+           let node = notes[j];
+              if (node["subClassOf"] != undefined) {
+                  var linkObj = new Object();
+                  linkObj.source = node["@id"].split("#")[1].toString();
+                  linkObj.target = node["subClassOf"].split("#")[1].toString();
+                  linkObj.linkName = "subClassOf";
+                  links_data[count] = linkObj;
+                  count++;
+              }
           }
         }
     }
-
     convertJsonLD();
-
-var nodes_data =  [
-    {"name": "Componente", "sex": "F"},
-    {"name": "Sistema de Busca", "sex": "M"},
-    {"name": "Sistema de Organização", "sex": "M"},
-    {"name": "Sistema de Rotulação", "sex": "F"},
-    {"name": "Sistema de Navegação", "sex": "F"},
-    {"name": "Interface de Busca", "sex": "M"},
-    {"name": "Estrutura", "sex": "F"},
-    {"name": "Esquemas de Organização", "sex": "M"},
-    {"name": "Icone", "sex": "M"},
-    {"name": "Link Textual", "sex": "F"},
-    {"name": "Embutido", "sex": "M"},
-    {"name": "Engenho de Busca", "sex": "F"},
-    {"name": "Top Down", "sex": "M"},
-    {"name": "Bottom Up", "sex": "M"},
-    {"name": "Ambigua", "sex": "M"},
-    {"name": "Exata", "sex": "M"},
-    {"name": "Global", "sex": "F"},
-    {"name": "Local", "sex": "M"},
-    {"name": "Contextual", "sex": "F"},
-    {"name": "Conteudo", "sex": "F"},
-    {"name": "Hibrido", "sex": "F"},
-    {"name": "Publico Alvo", "sex": "F"},
-    {"name": "Tarefa", "sex": "M"},
-    {"name": "Metafora", "sex": "F"},
-    {"name": "Assunto", "sex": "M"},
-    {"name": "Alfabeto", "sex": "M"},
-    {"name": "Localização", "sex": "F"},
-	{"name": "Tempo", "sex": "F"},
-	{"name": "Resultado", "sex": "F"},
-	{"name": "Usuário", "sex": "F"}
-    ]
-
-    //Sample links data
-    //type: A for Ally, E for Enemy
-var links_data = [
-	{"source": "Sistema de Busca", "target": "Componente", "type":"É um" },
-    {"source": "Sistema de Organização", "target": "Componente", "type":"É um" },
-    {"source": "Sistema de Rotulação", "target": "Componente", "type":"É um"},
-    {"source": "Sistema de Navegação", "target": "Componente", "type":"É um"},
-    {"source": "Sistema de Busca", "target": "Interface de Busca", "type":"Contem"},
-    {"source": "Interface de Busca", "target": "Engenho de Busca", "type":"Alimenta"},
-    {"source": "Engenho de Busca", "target": "Conteudo", "type":"Pesquisa No"},
-	{"source": "Conteudo", "target": "Resultado", "type":"Apresenta Como"},
-	{"source": "Resultado", "target": "Usuário", "type":"Analisado"},
-	{"source": "Usuário", "target": "Interface de Busca", "type":"Faz Consulta"},
-	{"source": "Sistema de Organização", "target": "Estrutura", "type":"Segue"},
-	{"source": "Top Down", "target": "Estrutura", "type":"É um"},
-	{"source": "Bottom Up", "target": "Estrutura", "type":"É um"},
-    {"source": "Ambigua", "target": "Esquemas de Organização", "type":"É um"},
-	{"source": "Sistema de Organização", "target": "Esquemas de Organização", "type":"Está Organizado em"},
-	{"source": "Exata", "target": "Esquemas de Organização", "type":"É um"},
-	{"source": "Hibrido", "target": "Ambigua", "type":"É um"},
-	{"source": "Publico Alvo", "target": "Ambigua", "type":"É um"},
-	{"source": "Tarefa", "target": "Ambigua", "type":"É um"},
-	{"source": "Metafora", "target": "Ambigua", "type":"É um"},
-	{"source": "Assunto", "target": "Ambigua", "type":"É um"},
-	{"source": "Alfabeto", "target": "Exata", "type":"É um"},
-	{"source": "Localização", "target": "Exata", "type":"É um"},
-	{"source": "Tempo", "target": "Exata", "type":"É um"},
-	{"source": "Icone", "target": "Sistema de Rotulação", "type":"É um"},
-	{"source": "Link Textual", "target": "Sistema de Rotulação", "type":"É um"},
-	{"source": "Embutido", "target": "Sistema de Navegação", "type":"É um"},
-	{"source": "Global", "target": "Embutido", "type":"É um"},
-	{"source": "Local", "target": "Embutido", "type":"É um"},
-	{"source": "Contextual", "target": "Embutido", "type":"É um"},
-]
-
+    console.log(nodes_data);
+    console.log(links_data);
 
     //set up the simulation
     var simulation = d3.forceSimulation()
@@ -171,16 +170,18 @@ var links_data = [
                         .nodes(nodes_data);
 
     var link_force =  d3.forceLink(links_data)
-                            .id(function(d) { return d.name; })
+                            .id(function(d) { return d.nodeName; })
                             .distance(function (d) {
-							    return 10;
+							    return 200;
                             })
-                            .strength(0.1);
+                            .strength(1);
 
     var charge_force = d3.forceManyBody()
         .strength(-100);
 
     var center_force = d3.forceCenter(width / 2, height / 2);
+
+    var collide_force = d3.forceCollide(1.2*35);
 
     //custom force to put stuff in a box
     function box_force(alpha) {
@@ -197,7 +198,9 @@ var links_data = [
         .force("center_force", center_force)
         .force("links",link_force)
         .force("box_force", box_force)
-     ;
+        .force("collide", collide_force)
+     .alphaDecay(0.03)
+              .velocityDecay(0.4);
 
 
     //add tick instructions:
@@ -226,7 +229,7 @@ var links_data = [
 		.attr("dy", ".35em")
 		.attr("text-anchor", "middle")
 		.text(function(d) {
-			return d.type;
+			return d.linkName;
 		});
 
     //draw circles for the nodes
@@ -270,7 +273,7 @@ var links_data = [
           .enter().append("text")
             .attr("dy", 2)
             .attr("text-anchor", "middle")
-            .text(function(d) {return d.name})
+            .text(function(d) {return d.nodeName})
             .attr("fill", classLabelColorCode);
 
     svg.append("svg:defs").selectAll("marker")
@@ -314,7 +317,7 @@ var links_data = [
     function getClassColorCode(d) {
       if (colorRuleArray.length > 0) {
         for (var i = 0; i < colorRuleArray.length; i++) {
-            if (d.name.toUpperCase() == colorRuleArray[i].elementValue.toUpperCase()) {
+            if (d.nodeName.toUpperCase() == colorRuleArray[i].elementValue.toUpperCase()) {
                 return colorRuleArray[i].colorCode;
             }
         }
@@ -334,8 +337,12 @@ var links_data = [
         //update circle positions each tick of the simulation
         if (nodeType == "circle") {
            node
-            .attr("cx", function(d) { return d.x; })
-            .attr("cy", function(d) { return d.y; });
+            .attr("cx", function(d) {
+            return d.x;
+            })
+            .attr("cy", function(d) {
+            return d.y;
+            });
         } else if (nodeType == "rect") {
            node
             .attr("x", function(d) { return d.x; })

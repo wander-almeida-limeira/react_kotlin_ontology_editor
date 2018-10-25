@@ -103,6 +103,7 @@ class TabGroup(props: TabGroupProps) : RComponent<TabGroupProps, TabGroupState>(
         if (state.tab == 0) graphEditorComponent(1) else
         div(classes="main-div container") {
             if (state.tab == 1) individualsComponent()
+            if (state.tab == 3) classHierarchyComponent()
             if (state.tab == 6) settingsComponent()
         }
     }
